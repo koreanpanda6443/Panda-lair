@@ -1,0 +1,56 @@
+// This is small section is in C++, because Fortran( or also known as Forumla Translater) is mainly used for calucation
+// This is the Orignal version, there will be modifed version later on
+#include <stdio.h> 
+#include <string.h>
+#include <Fstream>
+int main(int argc, char *argv[])
+{
+	// I will be using Ivideon, which is the website that will connect to IP Webcam(which is the app i have on my phone)
+	char url(1000) =" http://www.ivideon.com/my/watch/200-225McF9SLBEMwLgD3JsGHB/0";
+
+	std:: fstream fs;
+	fs.open(url);
+	fs.close();
+
+	return 0;
+}
+// this is were Fortran is at, Fortran or Formula Translater will analysis the video and give calucation
+// Fortran is different, in still of using  double slashs, it uses an ! for notes
+// the box below is what each variable are as well what it's function
+!------------------------------------------------------------------
+! Given t, the time since launch, u the launch velocity, a, the 
+! intial angle of launch(in degree), and g, the acceleration due to
+! gravity, this program computes the position (x and y coordinates)
+! and the velocity (magnitude and direction) of a projectile
+!------------------------------------------------------------------
+
+PROGRAM Projectile
+IMPLICT NONE
+REAL, PARAMETER :: g = 9.8          ! acceleration due to gravity
+REAL, PARAMETER :: PI = 3.1415926   ! Pi is been given for converting Angle to Radian
+REAL            :: Angle            ! launch angle in degree
+REAL            :: Time             ! time to flight
+REAL            :: Theta            ! direction at time in degree
+REAL            :: U                ! launch velocity
+REAL            :: V                ! resultant velocity
+REAL            :: Vx               ! vertical velocity
+REAL            :: Vy               ! horizontal velocity
+REAL            :: X                ! vertical velocity
+REAL            :: Y                ! horizontal velocity
+
+READ(*,*) Angle, Time, U
+
+Angle = Angle * PI / 180.0                            ! convert to radian
+X     = U * COS(Angle) * Time
+Y     = U * SIN(Angle) * Time - g * Time * Time / 2.0
+Vx    = U * COS(Angle)
+VY    = U * SIN(Angle) -g * Time
+V     = SQRT(Vx * Vx + Vy * Vy)                       ! SQRT is Square Root
+Theta = ATAN(Vy / Vx) * 180.0 / PI
+
+WRITE(*,*) 'Horizontal displacement : ', X
+WRITE(*,*) 'Vertical displacement   : ', Y
+WRITE(*,*) 'Resultant velocity      : ', V
+WRITE(*,*) 'Direction(in degree)    : ', Theta
+
+END PROGRAM Projectile
