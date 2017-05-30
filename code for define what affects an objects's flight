@@ -17,6 +17,7 @@ int main(int argc, char *argv[])
 // this is were Fortran is at, Fortran or Formula Translater will analysis the video and give calucation
 // Fortran is different, in still of using  double slashs, it uses an ! for notes
 // the box below is what each variable are as well what it's function
+// Make sure that in fortran the keywords are always in caps, no matter what
 !------------------------------------------------------------------
 ! Given t, the time since launch, u the launch velocity, a, the 
 ! intial angle of launch(in degree), and g, the acceleration due to
