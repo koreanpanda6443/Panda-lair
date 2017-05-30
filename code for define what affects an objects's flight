@@ -1,5 +1,6 @@
 // This is small section is in C++, because Fortran( or also known as Forumla Translater) is mainly used for calucation
 // This is the Orignal version, there will be modifed version later on
+// This is to calucate what affects an objects flight.
 #include <stdio.h> 
 #include <string.h>
 #include <Fstream>
