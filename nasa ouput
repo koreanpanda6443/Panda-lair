@@ -1,0 +1,77 @@
+
+ TEST RUN DC9 (03/10/93)
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< CASE INPUT DATA >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+ Gravitational accel. (g)= 32.174(ft/s^2)
+ Air density at takeoff = 0.002(sl/ft^3
+ Aircraft weight (W)= 95000.000 (lbs)
+ Aircraft wing area (S)= 1000.000(ft/s^2)
+ Max lift coeff (CLmax)= 2.000(nondim)
+ Ground lift coeff(CLgrd)= 0.300(nondim)
+ Air lift coeff (CLair)= 1.650(nondim)
+ Ground drag coeff(CDgrd)= 0.080(nondim)
+ Air drag coeff (CDair)= 0.121(nondim)
+ Roll frict coeff (MUgrd)= 0.025(nondim)
+ Brake frict coeff(MUbrk)= 0.300(nondim)
+ Angle of thrust (LAMBDA)= 0.000 (deg)
+ Stall margin (k)= 1.100(ft/s^2)
+ Descision time (TIME)= 3.000 (sec)
+ Obstacle height (OBSHT)= 35.000 (ft)
+ EI pwr remaining (PLOSS)= 0.500 (fract)
+THRUST = 31450.000 + -17.263*V + 0.025*V^2
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<< NORMAL TAKEOFF DATA >>>>>>>>>>>>>>>>>>>>>>>>>
+Time (s) X-Dist (ft) X-Vel (ft/s) Y-Dist (ft) Y-Vel (ft/s)
+ 0.000 0.000 0.000 0.000 0.000
+ 1.000 4.914 9.818 0.000 0.000
+ 2.000 19.615 19.574 0.000 0.000
+ 3.000 44.040 29.266 0.000 0.000
+ 4.000 78.123 38.889 0.000 0.000
+ 5.000 121.794 48.441 0.000 0.000
+ 6.000 174.980 57.918 0.000 0.000
+ 7.000 237.604 67.318 0.000 0.000
+ 8.000 309.588 76.636 0.000 0.000
+ 9.000 390.849 85.871 0.000 0.000
+ 10.000 481.301 95.020 0.000 0.000
+ 11.000 580.858 104.079 0.000 0.000
+ 12.000 689.429 113.047 0.000 0.000
+ 13.000 806.921 121.921 0.000 0.000
+ 14.000 933.239 130.699 0.000 0.000
+ 15.000 1068.286 139.378 0.000 0.000
+ 16.000 1211.962 147.958 0.000 0.000
+ 17.000 1364.167 156.435 0.000 0.000
+ 18.000 1524.798 164.808 0.000 0.000
+ 19.000 1693.749 173.076 0.000 0.000
+ 20.000 1870.914 181.237 0.000 0.000
+ 21.000 2056.187 189.290 0.000 0.000
+4
+ 22.000 2249.458 197.233 0.000 0.000
+ 23.000 2450.617 205.066 0.000 0.000
+ 24.000 2659.553 212.787 0.000 0.000
+ 24.936 2862.368 219.912 0.000 0.000
+ 27.936 3555.614 242.080 0.000 0.000
+ 28.000 3571.035 242.515 0.014 0.434
+ 29.000 3816.719 248.600 4.282 8.473
+ 30.000 4067.677 252.999 17.637 18.539
+ 30.716 4249.870 254.706 35.000 26.859
+Time (s) X-Dist (ft) X-Vel (ft/s) Y-Dist (ft) Y-Vel (ft/s)
+<<<<<<<<<<<<<<<<<<<<<<<<<< NORMAL TAKEOFF SUMMARY >>>>>>>>>>>>>>>>>>>>>>
+ Rotation Velocity (Vr)= 219.912 (ft/s)
+ Liftoff Velocity (Vlo)= 242.079 (ft/s)
+ Velocity over obs.(Vobs)= 256.118 (ft/s)
+ Rotation Distance (Xr)= 2862.368 (ft)
+ Liftoff Distance (Xlo)= 3555.614 (ft)
+ Distance to obst. (Xobs)= 4249.870 (ft)
+ Rotation Time (Tr)= 24.936 (s)
+ Liftoff Time (Tlo)= 27.936 (s)
+ Time to obst. (Tobs)= 30.716 (s)
+ TOTAL TAKEOFF DIST (Xto)= 4249.870 (ft)
+ TOTAL TAKEOFF TIME (Tto)= 30.716 (s)
+<<<<<<<<<<<<<<<<<<<<<<<<<< OEI TAKEOFF SUMMARY >>>>>>>>>>>>>>>>>>>>>>
+ Critical Velocity (Vcrit) = 203.830 (ft/s)
+ Decision Velocity (V1) = 212.327 (ft/s)
+ Velocity over obs. (Vobs) = 256.118 (ft/s)
+ Critical Distance (Xcrit) = 2418.157 (ft)
+ Decision Distance (X1) = 3042.478 (ft)
+ Balanced Field Length (BFL) = 5399.453 (ft)
+ Critical Time (Tcrit) = 22.841 (s)
+ Decision Time (T1) = 25.841 (s)
+ OEI Takeoff Time (TBFL) = 48.333 (s)
