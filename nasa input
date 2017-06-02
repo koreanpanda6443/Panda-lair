@@ -1,0 +1,27 @@
+TEST RUN DC9 (03/10/93) <- Run Title and Information
+.002376900 <- Density of air at takeoff (sl/ft^3)
+95000.0 <- Weight of aircraft (lbs)
+1000. <- Wing area of aircraft (ft^2)
+2.000 <- CLmax - max lift coefficient of the aircraft
+0.30 <- CLgrd - lift coeff. for ground run takeoff segment
+1.6500 <- CLair - lift coeff. for climb takeoff segment
+.080 <- CDgrd - drag coeff. for ground run takeoff segment
+0.121 <- CDair - drag coeff. for climb takeoff segment
+.025 <- MUgrd - rolling friction coefficient *Note 1*
+.3 <- MUbrk - braking friction coefficient *Note 2*
+0.0 <- LAMBDA - thrust deflection angle, positive up (rad)
+1.1 <- K - stall margin *Note 3*
+3. <- TIME between engine failure and braking (sec) *Note4*
+35. <- OBSHT - height of obstacle (ft) (usu 35 or 50 ft)
+0.5 <- PLOSS - fraction of power remaining when engine fails
+31450.0 29835.0 28475.0 <- 3 thrusts (lbs) *Note 5*
+0. 111.6 334. <- 3 velocities (ft/s)
+1.00 <- TSTEP - time step for incremental output (sec) *Note 6*
+3. <- TROT - time required for rotation
+7 <- Integer for output device *Note 7*
+Note 1: Rolling friction coefficient is typically:
+ Dry concrete/Asphalt - 0.02
+ Hard turf/Gravel - 0.04
+ Short, dry grass - 0.05
+ Long grass - 0.10
+ Soft Ground - 0.10 to 0.30
