@@ -1,0 +1,281 @@
+    PI= 3.14159265#
+   
+   REM  Next line may be Mac specific, mod as required on IBM
+    CALL TEXTFONT(4): REM for the Mac, sets a monmospace screen font
+
+    DEF  FN ASIN(X) =  ATN (X /  SQR ( - X * X + 1))
+    DEF  FN AC(X) =  -  ATN (X /  SQR ( - X * X + 1)) + .5 * PI
+20  PRINT
+    NA$ = "             AEROCAL - Pak #1": GOSUB 5000: PRINT 
+    NA$ = "       Basic Aerodynamic Relations": GOSUB 5000: PRINT 
+    NA$ = "               by W.H. Mason": GOSUB 5000: PRINT : PRINT 
+    NA$ = "  Apple ][ Computer Version, Release: 1.02": GOSUB 5000: PRINT : PRINT 
+    NA$ = "         Copyright 1987 by AEROCAL": GOSUB 5000: PRINT 
+    NA$ = "       Box 799, Huntington, NY 11743, Now:": GOSUB 5000: PRINT
+    NA$ = "Department of Aerospace and Ocean Engineering":GOSUB 5000 : PRINT
+    NA$ = "        Virginia Tech, Blacksburg, VA": GOSUB 5000: PRINT: PRINT
+    NA$ = "  PROGRAMS": GOSUB 5000: PRINT : PRINT 
+    NA$ = "1 NACA 1135+, Rayl/Fanno Line": GOSUB 5000: PRINT 
+    NA$ = "2 Prandtl-Meyer Angle & Inverse": GOSUB 5000: PRINT 
+    NA$ = "3 Oblique Shocks ": GOSUB 5000: PRINT 
+    NA$ = "4 1976 Standard Atmosphere": GOSUB 5000: PRINT 
+    NA$ = "5 -Exit ": GOSUB 5000: PRINT : PRINT 
+120 NA$ = " Select Program No. : ": GOSUB 5000: INPUT AN$: PRINT
+    NA$ = " Program No. = " + AN$ + "   ? (Y/N) : ": GOSUB 5000: INPUT AC$
+    PRINT : IF AC$ = "N" OR AC$ = "n" THEN 120
+    PG =  VAL (AN$): IF PG <  > 5 THEN 155
+    PRINT:END
+155 IF PG = 4 THEN  GOSUB 1000: GOTO 190
+    NA$ = " Is Gamma    = 1.4 ? (Y/N) : ": GOSUB 5000: INPUT AC$
+    G = 1.4: IF AC$ = "Y" OR AC$ = "y" THEN 180
+    PRINT :NA$ = " Input Gamma : ": GOSUB 5000: INPUT "";G
+180 GP = G + 1:GM = G - 1: PRINT : ON PG GOSUB 200,400,600,1000
+190 GOTO 20: REM  * RETURN TO MAIN MENU
+
+200  REM  NACA 1135+,RAYLEIGH/FANNO LINE
+205  PRINT :NA$ = " NACA 1135+ & Raleigh/Fanno Line"
+     GOSUB 5000: PRINT
+210  PRINT : NA$ = "  M = ":GOSUB 5000:INPUT "";M
+     NA$ = "  Gamma = ": GOSUB 5000: PRINT G
+     IF M <  = 0 THEN  PRINT : PRINT TAB(25);:PRINT "   *** M MUST BE > 0 ***": GOTO 210
+     PRINT
+     MS = M * M:BE =  SQR ( ABS (MS - 1)):TT = 1 / (1 + GM / 2 * MS)
+     CV =  - 99.9999: IF M > 0 THEN CV =  - 2 / G / MS
+     P0 = TT ^ (G / GM):R0 = TT ^ (1 / GM):A0 =  SQR (TT):QP = G / 2 * MS * P0
+     ASN = M * (GP / 2 * TT) ^ (GP / 2 / GM):VS =  SQR (GP / 2 * MS * TT)
+230  CC =  - 2 / G / MS * (1 - (2 / GP) ^ (G / GM) / P0)
+
+      PRINT TAB(25);:PRINT USING "  M         = #.#####^^^^      Beta   = #.#####^^^^";M;BE
+      PRINT TAB(25);:PRINT USING "  Cp crit   = #.#####^^^^      Cp vac = #.#####^^^^";CC;CV
+      PRINT TAB(25);:PRINT USING "  T/T0      = #.#####^^^^      P/P0   = #.#####^^^^";TT;P0
+      PRINT TAB(25);:PRINT USING "  r/r0      = #.#####^^^^      a/a0   = #.#####^^^^";R0;A0
+      PRINT TAB(25);:PRINT USING "  Q/P0      = #.#####^^^^      A/A*   = #.#####^^^^";QP;1/ASN
+      PRINT TAB(25);:PRINT USING "  V/a*      = #.#####^^^^      T0/T   = #.#####^^^^";VS;1/TT
+      
+     IF M < 1 THEN 340
+
+     A1 =  SQR (GP / GM):MU = 90!:NU = 0!
+     IF M > 1 THEN MU = 180 / PI *  FN ASIN(1 / M)
+     IF M > 1 THEN NU = 180 / PI * (A1 *  ATN (BE / A1) -  FN AC(1 / M))
+     PRINT TAB(25);:PRINT USING "  Mu        = #.#####^^^^ deg  Nu     = #.#####^^^^ deg";MU;NU
+     GOSUB 800
+     PRINT TAB(25);:PRINT USING "  THET(DMX) = #.#####^^^^ deg  DMX    = #.#####^^^^ deg";TM;DM
+     GOSUB 900:U2 = M2 / M *  SQR (T2)
+     PRINT TAB(25);:PRINT USING "  M2        = #.#####^^^^      U2/U1  = #.#####^^^^";M2;U2
+340  NA$ = " Compute Ray/Fanno Line ?  (Y/N): ": GOSUB 4300
+     PRINT : IF AN$ = "N" OR AN$ = "n" THEN 390
+     NA$ = "  Rayleigh (R) and Fanno (F) Lines": GOSUB 5000: PRINT
+     PRINT : PRINT TAB(25) "  M = ";M;:NA$ = "  Gamma = "
+     GOSUB 5000: PRINT G: PRINT
+     PR = GP / (1 + G * MS):TR = PR ^ 2 * MS:TQ = 2 / GP / TT * TR:VR = PR * MS
+     PQ = PR * (2 / GP / TT) ^ (G / GM):TF = GP / 2 * TT:PF =  SQR (TF) / M
+     PZ = (1 / TF) ^ (GP / 2 / GM) / M
+     FF = (1 + G * MS) / M /  SQR (2 * GP / TT)
+     VF = MS * PF:FD = (1 - MS) / G / MS + GP / 2 / G *  LOG (TF * MS)
+
+     PRINT TAB(25);:PRINT USING "  R T0/T0*  = #.#####^^^^      T/T*   = #.#####^^^^";TQ;TR
+     PRINT TAB(25);:PRINT USING "  R P/P*    = #.#####^^^^      P0/P0* = #.#####^^^^";PR;PQ
+     PRINT TAB(25);:PRINT USING "  R V/V*    =  R*/R      =     M*     = #.#####^^^^";VR
+     PRINT
+     PRINT TAB(25);:PRINT USING "  F T/T*    = #.#####^^^^      P/P*   = #.#####^^^^";TF;PF
+     PRINT TAB(25);:PRINT USING "  F P0/P0*  = #.#####^^^^      V/V*   = #.#####^^^^";PZ;VF
+     PRINT TAB(25);:PRINT USING "  F F/F*    = #.#####^^^^      4fL/D  = #.#####^^^^";FF;FD
+     
+390  PRINT :NA$ = "  Another M ?   (Y/N) :": GOSUB 4300
+     PRINT : IF AN$ = "Y" OR AN$ = "y" THEN 205
+     RETURN
+
+     REM  PRANDTL-MEYER ANGLE & INVERSE
+400  PRINT :NA$ = " Prandtl-Meyer Angle or Inverse"
+     GOSUB 5000: PRINT
+406  PRINT :NA$ = " Input options are : ": GOSUB 5000: PRINT : PRINT 
+     NA$ = "  1 - the Prandtl-Meyer angle, Nu": GOSUB 5000: PRINT
+     NA$ = "  2 - the Mach number, M": GOSUB 5000: PRINT
+     PRINT :NA$ = " Enter 1 or 2 : ": GOSUB 5000:A1 = GP / GM
+     INPUT C$:  PRINT : IF C$ = "1" THEN 500
+425  NA$=" M = ":GOSUB 5000:INPUT "";M
+     B = M ^ 2 - 1: IF B > 0 THEN 450
+     NA$ = " M must be > 1": GOSUB 5000: PRINT : GOSUB 4000: GOTO 425
+450  NU =  SQR (A1) *  ATN ( SQR (B / A1)) -  ATN ( SQR (B)):NU = 180 / PI * NU
+     PRINT :PRINT TAB(25): PRINT USING " Gamma =  #.###";G
+     PRINT TAB(25):PRINT USING " Nu    = ##.### deg";NU
+     PRINT : GOSUB 4500: PRINT : IF AN$ = "Y" OR AN$ = "y" THEN 406
+     RETURN
+
+500  A1 =  SQR (A1)
+505  NA$ = " Nu (in degrees) = ": GOSUB 5000: INPUT "";NU
+     VM = 90 * (A1 - 1): IF NU < VM THEN 520
+     PRINT :NA$ = " Nu>Nu-Max = ": GOSUB 5000: PRINT VM
+     GOSUB 4000: GOTO 505
+520  NR = PI / 180 * NU:Q = 2: ICOUNT = 0
+530  QP = Q:F = NR - A1 *  ATN (Q / A1) +  ATN (Q)
+     FQ = 1 / (1 + Q ^ 2) - A1 ^ 2 / (A1 ^ 2 + Q ^ 2)
+     Q = Q - F / FQ
+      ICOUNT = ICOUNT + 1
+      EP =  ABS (QP - Q)
+      IF ICOUNT > 20 THEN PRINT EP: IF ICOUNT > 100 GOTO 560
+      IF EP > .000001 THEN 530
+560  M =  SQR (Q ^ 2 + 1)
+     PRINT :PRINT TAB(25):PRINT USING " Gamma =   #.####";G
+     PRINT TAB(25): PRINT USING " M     = ###.#### ";M
+     GOSUB 4500: IF AN$ = "Y" OR AN$ = "y" THEN 406
+     RETURN
+
+     REM  OBLIQUE SHOCK
+600  PRINT :NA$ = " Oblique Shock Analysis"
+     GOSUB 5000: PRINT
+605  PRINT :NA$ = " Upstream Mach No. = ": GOSUB 5000: INPUT "";M
+     MS = M * M:NA$ = " Gamma = ": GOSUB 5000: PRINT G
+     PRINT : IF M <= 1 THEN  NA$ = " M MUST BE > 1": GOSUB 5000: PRINT : GOSUB 4000
+     IF M <= 1 THEN 605
+     GOSUB 800:MU =  FN ASIN(1 / M):MD = 180 * MU / PI
+     NA$ = " Input shk ang(1) or defl(2)  (1/2): "
+     NA$ = " Input options are:": GOSUB 5000: PRINT : PRINT
+     NA$ = "   1 - the shock wave angle, Theta, or": GOSUB 5000: PRINT
+     NA$ = "   2 - the flow deflection angle, Delta": GOSUB 5000: PRINT
+     PRINT :NA$ = " Enter 1 or 2 : ": GOSUB 5000
+     INPUT C$: PRINT : IF C$ = "1" THEN 700
+640  NA$ = " Delta (flow deflection, degrees) = ": GOSUB 5000: INPUT "";DE
+     PRINT :N = 4:DR = PI / 180 * DE
+     IF DE > DM THEN  PRINT TAB(25) " DELTA>DELTA-MAX=";DM: GOSUB 4000: GOTO 640
+     B =  - (MS + 2) / MS - G *  SIN (DR) ^ 2:D =  - (( COS (DR) / MS) ^ 2)
+     C = (2 * MS + 1) / MS ^ 2 + (GP ^ 2 / 4 + GM / MS) *  SIN (DR) ^ 2
+     PH = MU: A = SIN(MU)^2
+     IF DE > 0 THEN PH =  FN AC((4.5 * B * C - B ^ 3 - 13.5 * D) / (B ^ 2 - 3 * C) ^ 1.5)
+     IF DE > 0 THEN A =  - B / 3 + 2 / 3 * (B ^ 2 - 3 * C) ^ .5 *  COS ((PH + N * PI) / 3)
+     IF A > 0 THEN 680
+     PRINT TAB(25) " ANGLE EXCEEDS WEAK SHOCK LIMIT"
+     GOSUB 4000: GOTO 640
+680  TR =  FN ASIN( SQR (A)):TH = 180 / PI * TR: GOTO 720
+700  NA$ = " Theta = ": GOSUB 5000: INPUT "";TH:TR = PI / 180 * TH
+     IF TH > MD THEN 706
+     PRINT:PRINT TAB(25);
+     PRINT USING " ANGLE < MACH ANGLE = ##.### deg";MD: PRINT
+     GOSUB 4000: GOTO 700
+706  PRINT : IF TH < TM THEN GOTO 710
+     PRINT TAB(25);:PRINT USING " ANGLE > MAX FOR ATT. SHK = ##.### deg";TM
+     GOSUB 4000: GOTO 700
+710  W1 = MS *  SIN (TR) ^ 2 - 1
+     DR =  ATN (2 /  TAN (TR) * W1 / (MS * (G +  COS (2 * TR)) + 2))
+720  DE = 180 / PI * DR:MN = M *  SIN (TR):CP = 4 / GP / MS * (MN ^ 2 - 1)
+     W1 = 1 + GM / 2 * MN ^ 2:W2 = G * MN ^ 2 - GM / 2
+     M2 =  SQR (W1 / W2 /  SIN (TR - DR) ^ 2)
+     PRINT TAB(25);:PRINT USING "  Delta     = ##.### deg       Theta  = ##.### deg";DE;TH
+     PRINT TAB(25);:PRINT USING "  Cp        =##.####           M2     =##.####";CP;M2
+     MT = M:MQ = M2
+     M = MN:MS = M * M: GOSUB 900:M = MT:MS = M * M:M2 = MQ
+     V2 = M2 / M *  SQR (T2)
+     PRINT TAB(25);:PRINT USING "  Mn        =##.###            V2/V1  =##.####";MN;V2
+     GOSUB 4500: IF AN$ = "Y" OR AN$ = "y" THEN 600
+     RETURN
+ 
+     REM  * OBLIQUE SHOCK MAX ANGLE ROUTINE
+     REM  * NEEDS M,G DEFINES A8,A9 OUTPUT TM,DM ( IN DEGREES)
+800  A8 =  SQR (GP * (GP * M ^ 4 + 8 * GM * M * M + 16))
+     TM = PI / 2
+     IF M > 1 THEN TM =  FN ASIN( SQR ((GP * M ^ 2 - 4 + A8) / 4 / G / M ^ 2))
+     A8 = (M *  SIN (TM)) ^ 2 - 1:A9 = M ^ 2 * (G +  COS (2 * TM)) + 2
+     DM = 0: IF M > 1 THEN DM =  ATN (2 /  TAN (TM) * A8 / A9)
+     TM = 180 * TM / PI:DM = 180 * DM / PI
+     RETURN
+
+     REM  * NORMAL SHOCK ROUTINE
+900  A8 = 2 * G * MS - GM:A9 = GM * MS + 2:M2 =  SQR (A9 / A8):P2 = A8 / GP
+     R2 = GP * MS / A9:T2 = A8 * A9 / (GP * M) ^ 2
+     PY = (1 / (1 + GM / 2 * MS)) ^ (G / GM)
+     PX = ((GP * MS) / A9) ^ (G / GM) * (GP / A8) ^ (1 / GM)
+
+       PRINT TAB(25);:PRINT USING "  P2/P1     = #.#####^^^^      T2/T1  = #.#####^^^^";P2;T2
+       PRINT TAB(25);:PRINT USING "  P02/P01   = #.#####^^^^      R2/R1  = #.#####^^^^";PX;R2
+       PRINT TAB(25);:PRINT USING "  P1/P02    = #.#####^^^^      a2/a1  = #.#####^^^^";PY/PX;SQR(T2)
+       PRINT TAB(25);:PRINT USING "  R02/R01   = #.#####^^^^ ";PX
+       
+     RETURN
+
+      REM  * 1976 STANDARD ATMOSPHERE
+1000  PRINT :NA$ = "    1976 Standard Atmosphere"
+      GOSUB 5000: PRINT
+      NA$ = "English(E) or Metric(M) Units ? (E/M):": GOSUB 5000
+      INPUT AN$: PRINT : PRINT :KD = 1: IF AN$ = "M" OR AN$ = "m" THEN KD = 0
+1020  NA$ = "Input altitude (in meters) = "
+      IF KD = 0 THEN  GOSUB 5000: INPUT "";Z
+      NA$ = "Input altitude (in feet) = "
+      IF KD = 1 THEN  GOSUB 5000: INPUT "";Z
+      GOSUB 1200:PRINT : IF KK = 1 THEN 1020
+      PRINT TAB(25);:PRINT USING "T/Tsl  = #.######    a/asl      = #.######";TS;SQR(TS) 
+      PRINT TAB(25);:PRINT USING "P/Psl  = #.####^^^^  rho/rho sl = #.####^^^^";PP;RR
+      IF KD = 0 THEN 1110
+ 
+     PRINT TAB(25);:PRINT USING "T      = ###.## deg R;";T;
+     PRINT USING "  or ###.## deg F";T-459.69 
+     PRINT TAB(25);:PRINT USING "a      = ####.## fps";A 
+     PRINT TAB(25);:PRINT USING "P      =  #.####^^^^ psf";P
+     PRINT TAB(25);:PRINT USING "rho    =  #.####^^^^ slugs/ft^3";R
+     PRINT TAB(25);:PRINT USING "Mu     =  #.####^^^^ slugs/ft/sec";MU
+     PRINT TAB(25);:PRINT USING "Nu     =  #.####^^^^ ft^2/sec";MU/R
+     PRINT TAB(25);:PRINT USING "Re/M/L =  #.####^^^^ Reynolds No./Mach/ft";RM
+     PRINT TAB(25);:PRINT USING "Q/M^2  =  #.####^^^^ psf, dyn.press/Mach^2";QM
+     
+      GOTO 1140
+
+1110 PRINT TAB(25);:PRINT USING "T      = ###.## deg K;";T;
+     PRINT USING "  or ###.## deg C";T-273.15 
+     PRINT TAB(25);:PRINT USING "a      = ####.## m/s";A 
+     PRINT TAB(25);:PRINT USING "P      =  #.####^^^^ N/m^2";P
+     PRINT TAB(25);:PRINT USING "rho    =  #.####^^^^ Kg/m^3";R
+     PRINT TAB(25);:PRINT USING "Mu     =  #.####^^^^ Kg/m/sec";MU
+     PRINT TAB(25);:PRINT USING "Nu     =  #.####^^^^ m^2/sec";MU/R
+     PRINT TAB(25);:PRINT USING "Re/M/L =  #.####^^^^ Reynolds No./Mach/m";RM
+     PRINT TAB(25);:PRINT USING "Q/M^2  =  #.####^^^^ N/m^2, dyn.press/Mach^2";QM
+
+1140  PRINT : GOSUB 4500: IF AN$ = "N" OR AN$ = "n" THEN  RETURN
+      PRINT : GOTO 1020
+
+      REM  *********** 1976 STANDARD ATMOSPHERE SUBROUTINE **********
+1200  KK = 0:K = 34.163195#:C1 = .0003048: IF KD = 0 THEN 1240
+      TL = 518.67:PL = 2116.22:RL = .0023769:AL = 1116.45
+      ML = 3.7373E-07:BT = .000000030450963#: GOTO 1260
+1240  TL = 288.15:PL = 101325&:RL = 1.225:C1 = .001
+      AL = 340.294:ML = .000017894#:BT = 1.458E-06
+1260  H = C1 * Z / (1 + C1 * Z / 6356.766)
+      IF H > 11 THEN 1290
+      T = 288.15 - 6.5 * H:PP = (288.15 / T) ^ ( - K / 6.5): GOTO 1420
+1290  IF H > 20 THEN 1310
+      T = 216.65:PP = .22336 *  EXP ( - K * (H - 11) / 216.65): GOTO 1420
+1310  IF H > 32 THEN 1330
+      T = 216.65 + (H - 20):PP = .054032 * (216.65 / T) ^ K: GOTO 1420
+1330  IF H > 47 THEN 1350
+      T = 228.65 + 2.8 * (H - 32)
+      PP = .0085666 * (228.65 / T) ^ (K / 2.8): GOTO 1420
+1350  IF H > 51 THEN 1370
+      T = 270.65:PP = .0010945 *  EXP ( - K * (H - 47) / 270.65): GOTO 1420
+1370  IF H > 71 THEN 1390
+      T = 270.65 - 2.8 * (H - 51)
+      PP = .00066063# * (270.65 / T) ^ ( - K / 2.8): GOTO 1420
+1390  IF H > 84.852 THEN 1410
+      T = 214.65 - 2 * (H - 71)
+      PP = 3.9046E-05 * (214.65 / T) ^ ( - K / 2): GOTO 1420
+1410  KK = 1: PRINT :NA$ = "   Out of Table - too high !": GOSUB 5000
+      PRINT : GOSUB 4000: RETURN
+1420  RR = PP / (T / 288.15):MU = BT * T ^ 1.5 / (T + 110.4):TS = T / 288.15
+      A = AL *  SQR (TS):T = TL * TS:R = RL * RR
+      P = PL * PP:RM = R * A / MU:QM = .7 * P
+      RETURN
+
+      REM   * "PRESS RETURN"
+4000  PRINT 
+      NA$ = " Press RETURN to Continue ": GOSUB 5000: INPUT AC$:PRINT
+      RETURN
+ 
+      REM  * PRINT A MESSASGE ON SCREEN
+4300  PRINT 
+      GOSUB 5000:INPUT AN$: PRINT
+      RETURN
+ 
+      REM  * SETUP FOR ANOTHER CASE?
+4500  PRINT: NA$ = " Another case   (Y/N) : ": GOSUB 5000
+      INPUT AN$:  PRINT
+      RETURN
+ 
+      REM  * PRINT ROUTINE
+5000  PRINT TAB(25) NA$;: RETURN
